@@ -1,8 +1,7 @@
 import React from 'react';
 import { Create, SimpleForm, TextInput, SelectInput, ReferenceInput } from 'react-admin';
 import { BOARD_BACKGROUNDS } from '../../constants/board-backgrounds';
-
-const userSelectOption = (user) => `${user.name} (${user.email})`;
+import { userDisplay } from '../../utils/userDisplay';
 
 const BoardCreate = (props) => {
   return (
@@ -11,8 +10,8 @@ const BoardCreate = (props) => {
         <TextInput source="title" />
         <TextInput source="description" />
         <SelectInput source="background" choices={BOARD_BACKGROUNDS}></SelectInput>
-        <ReferenceInput source={'userId'} reference="user">
-          <SelectInput optionText={userSelectOption} />
+        <ReferenceInput source="userId" reference="user">
+          <SelectInput optionText={userDisplay} />
         </ReferenceInput>
       </SimpleForm>
     </Create>

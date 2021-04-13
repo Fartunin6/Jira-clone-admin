@@ -1,5 +1,14 @@
 import React from 'react';
-import { List, Datagrid, TextField, BooleanField, DeleteButton, ReferenceField } from 'react-admin';
+import { userDisplay } from '../../utils/userDisplay';
+import {
+  List,
+  Datagrid,
+  TextField,
+  BooleanField,
+  DeleteButton,
+  ReferenceField,
+  FunctionField,
+} from 'react-admin';
 
 const BoardList = (props) => {
   return (
@@ -9,7 +18,7 @@ const BoardList = (props) => {
         <TextField source="title" />
         <BooleanField source="isSaved" />
         <ReferenceField label="user" source="userId" reference="user">
-          <TextField source={'name'} />
+          <FunctionField render={userDisplay} />
         </ReferenceField>
         <DeleteButton basePath="/board" />
       </Datagrid>
