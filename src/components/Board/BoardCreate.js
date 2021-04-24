@@ -9,9 +9,11 @@ const BoardCreate = (props) => {
       <SimpleForm>
         <TextInput source="title" />
         <TextInput source="description" />
-        <ReferenceInput source="backgroundId" reference="backgrounds">
+
+        <ReferenceInput source="background" reference="backgrounds">
           <SelectInput optionText={<ColorField source="color" />} />
         </ReferenceInput>
+
         <ReferenceInput source="userId" reference="user">
           <SelectInput optionText={userDisplay} />
         </ReferenceInput>

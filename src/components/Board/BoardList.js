@@ -18,12 +18,15 @@ const BoardList = (props) => {
         <TextField source="id" />
         <TextField source="title" />
         <BooleanField source="isSaved" />
+
         <ReferenceField label="User" source="userId" reference="user">
           <FunctionField render={userDisplay} />
         </ReferenceField>
-        <ReferenceField label="Background" source="backgroundId" reference="backgrounds">
+
+        <ReferenceField label="Background" source="background" reference="backgrounds">
           <ColorField source="color" />
         </ReferenceField>
+
         <DeleteButton basePath="/board" />
       </Datagrid>
     </List>

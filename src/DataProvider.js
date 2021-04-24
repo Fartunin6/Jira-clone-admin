@@ -1,5 +1,6 @@
 import { fetchUtils } from 'react-admin';
 import { stringify } from 'querystring';
+import { HttpError } from 'react-admin';
 
 const apiURL = 'http://localhost:8000/api';
 
@@ -24,10 +25,12 @@ const DataProvider = {
   getList: (resource, params) => {
     const url = `${apiURL}/${resource}/all`;
 
-    return httpClient(url, { method: 'GET' }).then(({ headers, json }) => ({
-      data: json.data,
-      total: json.total,
-    }));
+    return httpClient(url, { method: 'GET' })
+      .then(({ headers, json }) => ({
+        data: json.data,
+        total: json.total,
+      }))
+      .catch((error) => console.log('catch', error));
   },
 
   getOne: (resource, params) => {},
@@ -39,21 +42,34 @@ const DataProvider = {
 
     const url = `${apiURL}/${resource}?${stringify(query)}`;
 
-    return httpClient(url, { method: 'GET' }).then(({ json }) => ({
+    return httpClient(url, { method: 'GET' }).then(({ headers, json }) => ({
       data: json.data,
     }));
   },
 
-  getManyReference: (resource, params) => {
-    console.log(resource, params);
-  },
+  getManyReference: (resource, params) => {},
 
-  update: (resource, params) => {},
+  update: (resource, params) => {
+    const url = `${apiURL}/${resource}/update`;
+
+    const data = Object.fromEntries(
+      Object.entries(params.data).filter(
+        ([key, value], idx) => value !== Object.entries(params.previousData)[idx][1],
+      ),
+    );
+
+    return httpClient(url, {
+      method: 'PATCH',
+      body: JSON.stringify({ id: params.id, newFields: data }),
+    }).then(({ headers, json }) => ({ data: json.data[0] }));
+  },
 
   updateMany: (resource, params) => {},
 
   create: (resource, params) => {
     const url = `${apiURL}/${resource}/`;
+
+    console.log('create');
 
     return httpClient(url, { method: 'POST', body: JSON.stringify(params.data) }).then(
       ({ headers, json }) => ({
