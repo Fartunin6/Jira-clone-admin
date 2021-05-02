@@ -1,4 +1,5 @@
 import React from 'react';
+import BoardFilter from './BoardFilter';
 import { userDisplay } from '../../utils/userDisplay';
 import { ColorField } from 'react-admin-color-input';
 import {
@@ -13,7 +14,7 @@ import {
 
 const BoardList = (props) => {
   return (
-    <List {...props}>
+    <List filters={<BoardFilter />} {...props}>
       <Datagrid rowClick="edit">
         <TextField source="id" />
         <TextField source="title" />

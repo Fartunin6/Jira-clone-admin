@@ -1,6 +1,5 @@
 import { fetchUtils } from 'react-admin';
 import { stringify } from 'querystring';
-import { HttpError } from 'react-admin';
 
 const apiURL = 'http://localhost:8000/api';
 
@@ -15,7 +14,7 @@ const httpClient = (
 
   options.headers.set(
     'Authorization',
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDdhOTJkODI0Zjg1ZDE5NzgyMjZkODIiLCJpYXQiOjE2MTg3MzE4NjEsImV4cCI6MTYxOTMzNjY2MX0.oLtbo6qD0yvQTFzP78745S4AJTYR0Yq5RcudLEPLXP8',
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgzY2VlZDNlMjU2YjM2ZDAzNTdiMWYiLCJpYXQiOjE2MTk5Mzc5MDgsImV4cCI6MTYyMDU0MjcwOH0.IrMp9zoRuINSMXjhnuH1lUHNMgUB7O1aoInM1iwAFAA',
   );
 
   return fetchUtils.fetchJson(url, options);
@@ -23,7 +22,12 @@ const httpClient = (
 
 const DataProvider = {
   getList: (resource, params) => {
-    const url = `${apiURL}/${resource}/all`;
+    const query = {
+      filter: JSON.stringify(params.filter),
+      sort: JSON.stringify(params.sort),
+    };
+
+    const url = `${apiURL}/${resource}/all?${stringify(query)}`;
 
     return httpClient(url, { method: 'GET' })
       .then(({ headers, json }) => ({
@@ -68,8 +72,6 @@ const DataProvider = {
 
   create: (resource, params) => {
     const url = `${apiURL}/${resource}/`;
-
-    console.log('create');
 
     return httpClient(url, { method: 'POST', body: JSON.stringify(params.data) }).then(
       ({ headers, json }) => ({
