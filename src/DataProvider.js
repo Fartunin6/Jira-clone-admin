@@ -14,7 +14,7 @@ const httpClient = (
 
   options.headers.set(
     'Authorization',
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgzY2VlZDNlMjU2YjM2ZDAzNTdiMWYiLCJpYXQiOjE2MTk5Mzc5MDgsImV4cCI6MTYyMDU0MjcwOH0.IrMp9zoRuINSMXjhnuH1lUHNMgUB7O1aoInM1iwAFAA',
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFhMDNiNjBiYzk1NzFmNGM5NDk1ZTkiLCJpYXQiOjE2MjE3NTQ4MjAsImV4cCI6MTYyMjM1OTYyMH0.L3bWlmXh0Rt91ukI5yKkT8xIiSQmcGwLFdbTeu5oae8',
   );
 
   return fetchUtils.fetchJson(url, options);
